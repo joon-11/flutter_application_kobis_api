@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_kobis_api/kobis_api.dart';
+import 'package:flutter_application_kobis_api/movie_detail_view.dart';
 
+// ignore: must_be_immutable
 class MovieDetail extends StatelessWidget {
   final String movieCd;
   MovieDetail({super.key, required this.movieCd});
@@ -8,9 +10,21 @@ class MovieDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    kobis_api.getMovieDetail(movieCd: movieCd);
+    var movieData = kobis_api.getMovieDetail(movieCd: movieCd);
+
     return Scaffold(
-      body: Text(movieCd),
+      body: FutureBuilder(
+        future: movieData,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            var movie = snapshot.data;
+            return MovieDetailView(movie: movie);
+          } else {
+            var msg = '데이터 로드중입니다';
+            return Center(child: Text(msg));
+          }
+        },
+      ),
     );
   }
 }
