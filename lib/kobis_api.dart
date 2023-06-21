@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
 
 class KobisApi {
@@ -32,6 +31,21 @@ class KobisApi {
     if (response.statusCode == 200) {
       var movie =
           jsonDecode(response.body)['movieInfoResult']['movieInfo'] as dynamic;
+      return movie;
+    } else {
+      return [];
+    }
+  }
+
+  Future<dynamic> getCompanyDetail({required String companyCd}) async {
+    var uri = '$_site/company/searchCompanyInfo.json';
+    uri = '$uri?key=$apiKey';
+    uri = '$uri&companyCd=$companyCd';
+
+    var response = await http.get(Uri.parse(uri));
+    if (response.statusCode == 200) {
+      var movie = jsonDecode(response.body)['companyInfoResult']['companyInfo']
+          as dynamic;
       return movie;
     } else {
       return [];
