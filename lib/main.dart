@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'main_page.dart';
+import 'package:flutter_application_kobis_api/main_page.dart';
 
 void main() {
   runApp(const MyApp());
