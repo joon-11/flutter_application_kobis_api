@@ -44,7 +44,7 @@ class KobisApi {
 
     var response = await http.get(Uri.parse(uri));
     if (response.statusCode == 200) {
-      var movie = jsonDecode(response.body)['companyInfoResult']['companyInfo']
+      var movie = jsonDecode(response.body)['company InfoResult']['companyInfo']
           as dynamic;
       return movie;
     } else {
