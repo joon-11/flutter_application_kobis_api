@@ -51,4 +51,21 @@ class KobisApi {
       return [];
     }
   }
+
+  Future<List<dynamic>> getSearchMovieList(
+      {required String searchType, required String searchValue}) async {
+    var uri = "$_site/movie/searchMovieList.json";
+    uri = '$uri?key=$apiKey';
+    uri = '$uri&$searchType=$searchValue';
+
+    var response = await http.get(Uri.parse(uri));
+
+    if (response.statusCode == 200) {
+      var movies = jsonDecode(response.body)['movieListResult']['movieList']
+          as List<dynamic>;
+      return movies;
+    } else {
+      return [];
+    }
+  }
 }

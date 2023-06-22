@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_kobis_api/kobis_api.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -10,11 +11,16 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   var controller = TextEditingController();
   var _searchType = 'movieNm';
+  final kobisApi = KobisApi(apiKey: "fb0169d0f5280099ff69a2d5fc5e95be");
 
-  void getMovieList() {
-    var site =
-        'http://kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieList.json?key=f5eef3421c602c6cb7ea224104795888&$_searchType=${controller.text}';
-    print(site);
+  void getMovieList() async {
+    print(controller.text);
+    var movies = await kobisApi.getSearchMovieList(
+        searchType: _searchType, searchValue: controller.text);
+
+    for (var movie in movies) {
+      print(movie);
+    }
   }
 
   @override
